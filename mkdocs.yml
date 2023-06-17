@@ -1,0 +1,23 @@
+site_name: photo-classifier
+
+theme:
+    name: "material"
+
+plugins:
+    - mkdocstrings
+    - autorefs
+    - swagger-ui-tag
+    - search
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+nav:
+    - "Introduction": index.md
+    - "Getting started": getting_started.md
+    - "All dev commands": dev_commands.md
+    - "Code reference": reference.md
