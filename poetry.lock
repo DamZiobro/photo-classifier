@@ -145,6 +145,34 @@ flake8 = ">=3.0.0"
 mypy = "*"
 
 [[package]]
+name = "geographiclib"
+version = "2.0"
+description = "The geodesic routines from GeographicLib"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
+name = "geopy"
+version = "2.3.0"
+description = "Python Geocoding Toolbox"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+geographiclib = ">=1.52,<3"
+
+[package.extras]
+aiohttp = ["aiohttp"]
+dev = ["coverage", "flake8 (>=5.0,<5.1)", "isort (>=5.10.0,<5.11.0)", "pytest-asyncio (>=0.17)", "pytest (>=3.10)", "readme-renderer", "sphinx-issues", "sphinx (<=4.3.2)", "sphinx-rtd-theme (>=0.5.0)"]
+dev-docs = ["readme-renderer", "sphinx (<=4.3.2)", "sphinx-issues", "sphinx-rtd-theme (>=0.5.0)"]
+dev-lint = ["flake8 (>=5.0,<5.1)", "isort (>=5.10.0,<5.11.0)"]
+dev-test = ["coverage", "pytest-asyncio (>=0.17)", "pytest (>=3.10)", "sphinx (<=4.3.2)"]
+requests = ["urllib3 (>=1.24.2)", "requests (>=2.16.2)"]
+timezone = ["pytz"]
+
+[[package]]
 name = "ghp-import"
 version = "2.1.0"
 description = "Copy your docs directly to the gh-pages branch."
@@ -696,7 +724,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "flake8 (<5)", "pytest-co
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "f971f54ad49dd27a61d25c7309466a7f969adfe9710ae417a4fcb54201b4f1bb"
+content-hash = "ad2904ec57b5bb7ada7b79ef3ca3855b6728a367e5995438e9d06fd5fa2abdb1"
 
 [metadata.files]
 atomicwrites = []
@@ -711,6 +739,8 @@ coverage = []
 exif = []
 flake8 = []
 flake8-mypy = []
+geographiclib = []
+geopy = []
 ghp-import = []
 griffe = []
 idna = []

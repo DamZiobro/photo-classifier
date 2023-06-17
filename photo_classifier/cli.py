@@ -1,5 +1,6 @@
 import importlib.metadata
 import os
+import shutil
 from datetime import datetime
 from pathlib import Path
 
@@ -11,6 +12,7 @@ from pydantic import (
 )
 
 from photo_classifier.utils import (
+    get_address_base_on_coordinates,
     get_image_exif_data,
     get_path_by_datetime,
 )
@@ -30,7 +32,12 @@ def cli():
     required=True,
 )
 def classify_dirs(photos_dir: DirectoryPath):
-    """Classify photos into dirs based on provided criteria."""
+    """
+    Move media files (photos and videos) from photos_dir
+    into dirs based on datetime media files was recorded.
+
+    Ex. photo taken 2023-03-01 will be moved to dir 2023/03/01
+    """
 
     click.echo(f"Classifying photos from {photos_dir} into dirs by time.")
 
@@ -43,9 +50,23 @@ def classify_dirs(photos_dir: DirectoryPath):
                     metadata.datetime_original, "%Y:%m:%d %H:%M:%S"
                 )
 
-                dir_path = get_path_by_datetime(time_taken)
-                click.echo(f"dir_path: {dir_path}; file: {file_path}")
+                dir_path: DirectoryPath = get_path_by_datetime(time_taken)
+                absolute_out_dir_path: DirectoryPath = Path(
+                    os.path.join(root, dir_path)
+                )
 
+                # getting address where photo was taken
+                photo_location: str = get_address_base_on_coordinates(
+                    metadata.gps_latitude, metadata.gps_longitude
+                )
+                click.echo(f"photo location: {photo_location}")
+
+                # create absolute_dir_path if it does not exist
+                absolute_out_dir_path.mkdir(parents=True, exist_ok=True)
+
+                # move file file_path into absolute_dir_path
+                click.echo(f"moving file {file_path} into {absolute_out_dir_path}")
+                shutil.move(str(file_path), str(absolute_out_dir_path))
                 continue
 
             click.echo(f"skipping classyfing file; {file_path}")

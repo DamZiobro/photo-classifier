@@ -9,3 +9,6 @@ reference for the technical implementation of the
 
 ::: photo_classifier.cli
     handler: python
+
+::: photo_classifier.utils
+    handler: python

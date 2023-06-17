@@ -1,8 +1,10 @@
 import os
 from datetime import datetime
 from pathlib import Path
+from typing import Tuple
 
 from exif import Image
+from geopy.geocoders import Nominatim
 from pydantic import (
     DirectoryPath,
     FilePath,
@@ -56,3 +58,18 @@ def get_path_by_datetime(time_taken: datetime) -> DirectoryPath:
             "{:02d}".format(time_taken.day),
         )
     )
+
+
+def dms_to_decimal(dms_latitude: Tuple) -> float:
+    degrees, minutes, seconds = dms_latitude
+    decimal_latitude = float(degrees) + float(minutes) / 60 + float(seconds) / 3600
+    return decimal_latitude
+
+
+def get_address_base_on_coordinates(latitude: Tuple, longitude: Tuple) -> str:
+    """Returns location address based on provided latitude and longitude."""
+    geolocator = Nominatim(user_agent="geoapiExercises")
+    location = geolocator.reverse(
+        str(dms_to_decimal(latitude)) + "," + str(dms_to_decimal(longitude))
+    )
+    return location
