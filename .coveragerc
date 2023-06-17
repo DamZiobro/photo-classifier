@@ -1,0 +1,2 @@
+[run]
+omit = photo_classifier/main.py

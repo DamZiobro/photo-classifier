@@ -6,7 +6,7 @@ authors = ["Damian Ziobro <damian@xmementoit.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-fire = "^0.4.0"
+click = "^8.1.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
@@ -26,4 +26,4 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-photo-classifier = "photo_classifier.command:main"
+photo-classifier = "photo_classifier.main:main"

@@ -7,5 +7,5 @@ reference for the technical implementation of the
 `photo-classifier`.
 
 
-::: photo_classifier.command
+::: photo_classifier.cli
     handler: python

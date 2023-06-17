@@ -1,31 +1,29 @@
-"""Unit tests of bcl-uploads-fetcher."""
+"""Unit tests of photo-classifier."""
 
-from unittest.mock import patch
+import pytest
 
-import fire
+from click.testing import CliRunner
 
-from photo_classifier.command import (
-    cli,
-    main,
+from photo_classifier.cli import (
+    version,
+    classify_dirs,
 )
 
 
-@patch("fire.Fire")
-def test_main_triggers_fire(mock_fire):
-    """Verify fire is triggered from main."""
-    main()
-    mock_fire.assert_called()
+@pytest.fixture
+def cli_runner():
+    return CliRunner()
 
-
-def test_version(capsys):
+def test_version(cli_runner):
     """Verify version."""
-    fire.Fire(cli, ["--version"])
-    cli_output = capsys.readouterr().out
-    assert "0.0.1" in cli_output
+    result = cli_runner.invoke(version)
+    assert result.exit_code == 0
+    assert result.output.strip() == "0.0.1"
 
 
-def test_photo_classifier_returns_hello_world(capsys):
+def test_photo_classifier_returns_text(cli_runner):
     """Verify output of fetch function."""
-    fire.Fire(cli, [])
-    cli_output = capsys.readouterr().out
-    assert "hello world" in cli_output
+    result = cli_runner.invoke(classify_dirs)
+    assert result.exit_code == 0
+    assert result.output.strip() == "Classifying photos into dirs"
+
