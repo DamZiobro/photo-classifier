@@ -135,8 +135,7 @@ def get_address_from_coordinates(
 
     Examples:
         >>> get_address_from_coordinates((49, 19, 10), (21, 10, 10))
-        Location(11, Tarnov, okres Bardejov, Prešovský kraj, Východné Slovensko, 086 01, \
-Slovensko, (49.3195659, 21.169340541894755, 0.0))
+        Location(11, Tarnov, okres Bardejov, Prešovský kraj, Východné Slovensko, 086 01, Slovensko, (49.3195659, 21.169340541894755, 0.0))
 
     Args:
         latitude (Tuple[float, float, float]): latitude in format (degrees, minutes, seconds)
@@ -144,7 +143,7 @@ Slovensko, (49.3195659, 21.169340541894755, 0.0))
 
     Returns:
         geopy.location.Location: location address
-    """
+    """  # noqa: E501
 
     geolocator = Nominatim(user_agent="geoapiExercises")
     address = geolocator.reverse(
