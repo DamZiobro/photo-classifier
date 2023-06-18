@@ -7,7 +7,7 @@ import pytest
 from photo_classifier.utils import (
     dms_to_decimal,
     get_path_by_datetime,
-    is_image_file,
+    is_photo_file,
     is_video_file,
 )
 
@@ -34,8 +34,8 @@ def test_get_path_by_datetime(time_taken, expected):
         ("/wwww/ccc.mp3", False),
     ],
 )
-def test_is_image_file(file_path, expected):
-    assert is_image_file(file_path) == expected
+def test_is_photo_file(file_path, expected):
+    assert is_photo_file(file_path) == expected
 
 
 @pytest.mark.parametrize(

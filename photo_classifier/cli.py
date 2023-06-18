@@ -6,6 +6,7 @@ from pathlib import Path
 
 import click
 from exif import Image
+from geopy.location import Location
 from pydantic import (
     DirectoryPath,
     FilePath,
@@ -13,8 +14,8 @@ from pydantic import (
 
 from photo_classifier.utils import (
     get_address_from_coordinates,
-    get_image_exif_data,
     get_path_by_datetime,
+    get_photo_exif_data,
 )
 
 
@@ -44,10 +45,10 @@ def classify_dirs(photos_dir: DirectoryPath):
     for root, _, files in os.walk(photos_dir):
         for filename in files:
             file_path: FilePath = Path(os.path.join(root, filename))
-            metadata: Image = get_image_exif_data(file_path)
-            if metadata:  # image file with metadata
+            exif_photo: Image = get_photo_exif_data(file_path)
+            if exif_photo:  # image file with metadata
                 time_taken: datetime = datetime.strptime(
-                    metadata.datetime_original, "%Y:%m:%d %H:%M:%S"
+                    exif_photo.datetime_original, "%Y:%m:%d %H:%M:%S"
                 )
 
                 dir_path: DirectoryPath = get_path_by_datetime(time_taken)
@@ -56,10 +57,10 @@ def classify_dirs(photos_dir: DirectoryPath):
                 )
 
                 # getting address where photo was taken
-                photo_location: str = get_address_from_coordinates(
-                    metadata.gps_latitude, metadata.gps_longitude
+                photo_location: Location = get_address_from_coordinates(
+                    exif_photo.gps_latitude, exif_photo.gps_longitude
                 )
-                click.echo(f"photo location: {photo_location}")
+                click.echo(f"photo address: {photo_location}")
 
                 # create absolute_dir_path if it does not exist
                 absolute_out_dir_path.mkdir(parents=True, exist_ok=True)

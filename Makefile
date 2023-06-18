@@ -28,10 +28,10 @@ type-check: ## check whether python annotations are properly assigned
 	poetry run mypy ${CODE_DIRS} ${TEST_DIRS}
 
 unit-tests: deps ## run unit tests
-	poetry run pytest -s -vv $(TEST_FILE)
+	poetry run pytest -s -vv --doctest-modules $(TEST_FILE)
 
 cov: deps ## run unit tests and should code coverage
-	poetry run pytest -s -vv --cov=$(CODE_DIRS) $(TEST_FILE)
+	poetry run pytest -s -vv --doctest-modules --cov=$(CODE_DIRS) $(TEST_FILE)
 
 cov-html: deps ## run unit tests and generate HTML report showing code coverage
 	poetry run coverage html
