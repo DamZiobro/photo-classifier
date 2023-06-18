@@ -60,16 +60,26 @@ def get_path_by_datetime(time_taken: datetime) -> DirectoryPath:
     )
 
 
-def dms_to_decimal(dms_latitude: Tuple) -> float:
+def dms_to_decimal(dms_latitude: Tuple[float, float, float]) -> float:
     degrees, minutes, seconds = dms_latitude
     decimal_latitude = float(degrees) + float(minutes) / 60 + float(seconds) / 3600
     return decimal_latitude
 
 
-def get_address_base_on_coordinates(latitude: Tuple, longitude: Tuple) -> str:
-    """Returns location address based on provided latitude and longitude."""
+def get_address_from_coordinates(
+    latitude: Tuple[float, float, float], longitude: Tuple[float, float, float]
+) -> str:
+    """
+    Returns location address based on provided latitude and longitude.
+
+    :param Tuple[float, float, float] latitude: latitude in format (degrees, minutes, seconds)
+    :param Tuple[float, float, float] longitude: longitude in format (degrees, minutes, seconds)
+    :return location address
+    :rtype str
+    """
+
     geolocator = Nominatim(user_agent="geoapiExercises")
-    location = geolocator.reverse(
+    address = geolocator.reverse(
         str(dms_to_decimal(latitude)) + "," + str(dms_to_decimal(longitude))
     )
-    return location
+    return address

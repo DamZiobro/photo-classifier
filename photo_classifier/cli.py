@@ -12,7 +12,7 @@ from pydantic import (
 )
 
 from photo_classifier.utils import (
-    get_address_base_on_coordinates,
+    get_address_from_coordinates,
     get_image_exif_data,
     get_path_by_datetime,
 )
@@ -56,7 +56,7 @@ def classify_dirs(photos_dir: DirectoryPath):
                 )
 
                 # getting address where photo was taken
-                photo_location: str = get_address_base_on_coordinates(
+                photo_location: str = get_address_from_coordinates(
                     metadata.gps_latitude, metadata.gps_longitude
                 )
                 click.echo(f"photo location: {photo_location}")

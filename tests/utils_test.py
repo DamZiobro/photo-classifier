@@ -1,9 +1,11 @@
+import math
 from datetime import datetime
 from pathlib import Path
 
 import pytest
 
 from photo_classifier.utils import (
+    dms_to_decimal,
     get_path_by_datetime,
     is_image_file,
     is_video_file,
@@ -50,3 +52,14 @@ def test_is_image_file(file_path, expected):
 )
 def test_is_video_file(file_path, expected):
     assert is_video_file(file_path) == expected
+
+
+@pytest.mark.parametrize(
+    "coordinates_tuple, expected",
+    [
+        ((30, 20, 10.1), 30.336),
+        ((5.3, 11.1, 7.2), 5.486),
+    ],
+)
+def test_dms_to_decimal(coordinates_tuple, expected):
+    assert math.isclose(dms_to_decimal(coordinates_tuple), expected, abs_tol=0.001)
